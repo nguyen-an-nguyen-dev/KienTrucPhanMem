@@ -1,0 +1,6 @@
+Nếu KHÔNG dùng Singleton thì sao?
+Logger l1 = new Logger();
+Logger l2 = new Logger();
+
+
+❌ Tạo nhiều object → sai yêu cầu bài toán
