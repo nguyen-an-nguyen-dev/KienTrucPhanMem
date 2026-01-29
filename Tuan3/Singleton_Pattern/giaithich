@@ -1,0 +1,14 @@
+1. Giải thích chi tiết các thành phần
+private static volatile Singleton instance;:
+
+volatile là từ khóa cực kỳ quan trọng. Nó đảm bảo rằng giá trị của biến instance luôn được đọc từ bộ nhớ chính (Main Memory), giúp các Thread khác nhau luôn thấy được giá trị mới nhất.
+
+Nó cũng ngăn chặn việc "sắp xếp lại lệnh" (instruction reordering) của trình biên dịch, tránh trường hợp một Thread nhận được một instance chưa khởi tạo xong.
+
+Hàm getInstance(String data):
+
+Lần kiểm tra 1 (if (result == null)): Nếu instance đã tồn tại, trả về ngay mà không cần vào khối synchronized. Điều này giúp tăng tốc độ vì việc "khóa" (locking) rất tốn tài nguyên.
+
+synchronized (Singleton.class): Chỉ cho phép duy nhất một Thread tiến vào khối mã bên trong tại một thời điểm.
+
+Lần kiểm tra 2 (if (result == null)): Sau khi Thread được vào bên trong, nó phải kiểm tra lại một lần nữa để chắc chắn rằng trong lúc nó chờ đợi, chưa có Thread nào khác khởi tạo instance.
